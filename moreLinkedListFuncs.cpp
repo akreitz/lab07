@@ -1,7 +1,7 @@
 #include <cassert>
 #include "linkedList.h"
 #include "linkedListFuncs.h"
-
+#include <iostream>
 // list: ptr to a linked list of Node (each with int data, and Node * next)
 // Return a pointer to node with the largest value.
 // You may assume list has at least one element  
@@ -201,35 +201,100 @@ void deleteNodeIteratively(LinkedList *list, int value) {
 }
 
 void deleteNodeRecursively(LinkedList *list, int value) {
+/*    
+    Node *firstNode;
+    firstNode = list->head;
+    
+    if (list->head == NULL) {
+        return;
+    }
+    
+    else if (firstNode->data == value) {
+        list->head = firstNode->next;
+        delete firstNode;
+        deleteNodeRecursivelyHelper(list->head, value);
+    }
+    
+    else {
+        deleteNodeRecursivelyHelper(list->head, value);
+    }
+*/
 	deleteNodeRecursivelyHelper(list->head,value);
-}
+	//list->tail = deleteNodeRecursivelyHelper(list->head,value);
 
+}
 
 Node* deleteNodeRecursivelyHelper(Node *head, int value) {
-	
-	Node *p, *link;
+    
+    Node *currentNode, *nextNode, *tempNode;
+    currentNode = head;
 
-	if (head == NULL) {
-		return NULL;
-	}
-
-	else if (head->data == value) {
-		// case for list of 1
-		if (head->next == NULL) {
+	// empty list condition
+    if (currentNode == NULL) {
+        return NULL;
+    }
+	// list not empty
+	else {
+		if (head->data == value) {
+			std::cout << "MATCH FOUND" << std::endl;
+			
 			delete head;
-			return NULL;
+			
 		}
-		else{
-			link = head->next;
-			deleteNodeRecursivelyHelper(head->next,value);
-			delete head;
-		}
-		//deleteNodeRecursivelyHelper(head,value);
-	}
-
-	else if (head->data != value) {
-		deleteNodeRecursivelyHelper(head->next,value);
-	}
 }
+/*
+		nextNode = currentNode->next;
+		// single item
+		if (currentNode->next == NULL) {
+			// match target value
+			if (currentNode->data == value) {
+				//deleteNodeRecursivelyHelper(nextNode,value);
+				delete currentNode;
+			}
+			else {
+				return currentNode;
+			}
+		}
+	}
+
+
+		// multi item list
+		else if (currentNode->next != NULL) {
+			nextNode = currentNode->next;
+			// match target
+			if (currentNode->data == value) {
+				head = nextNode;
+				deleteNodeRecursivelyHelper(nextNode,value);
+				delete currentNode;
+			}
+			else if (currentNode->data != value) {
+				deleteNodeRecursivelyHelper(nextNode,value);
+			}
+		}
+	}
+
+
+    else {
+        nextNode = currentNode->next;
+        
+        if (currentNode->data == value) {
+				head = nextNode;
+				deleteNodeRecursivelyHelper(nextNode,value);
+				delete currentNode;
+			}            
+        }
+        
+        else {
+			if (nextNode->next == NULL) {
+				return currentNode;
+			}
+            currentNode->next = nextNode->next;
+            deleteNodeRecursivelyHelper(currentNode, value);
+            delete nextNode;
+        }
+    }
+*/
+}
+
 
 
